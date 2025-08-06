@@ -100,12 +100,10 @@
         .loading-demo {
             height: 100%;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            position: relative;
             background: linear-gradient(135deg, #4fc3f7 0%, #3498db 100%);
             color: white;
-            position: relative;
+            overflow: hidden;
         }
         
         .loading-demo.dark {
@@ -122,43 +120,158 @@
             color: #333;
         }
         
-        .demo-logo {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
+        .demo-server-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
         }
         
-        .demo-title {
-            font-size: 2rem;
-            margin-bottom: 10px;
+        .demo-server-ip, .demo-player-count {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .demo-subtitle {
+        .demo-sidebar-left {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            width: 200px;
+            max-height: 70%;
+            overflow-y: auto;
+        }
+        
+        .demo-sidebar-right {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            width: 180px;
+        }
+        
+        .demo-rules h3, .demo-team h3 {
+            margin: 0 0 15px 0;
             font-size: 1rem;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 5px;
+        }
+        
+        .demo-rules ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .demo-rules li {
+            margin: 8px 0;
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+        
+        .demo-staff {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .demo-owner, .demo-mod {
+            font-size: 0.9rem;
+            padding: 5px;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .demo-main {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+        
+        .demo-logo img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.5));
+        }
+        
+        .demo-server-name {
+            font-size: 2.5rem;
+            margin: 20px 0 10px 0;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .demo-slogan {
+            font-size: 1.2rem;
             opacity: 0.8;
             margin-bottom: 30px;
+            font-style: italic;
         }
         
-        .demo-progress {
+        .demo-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid #ff6b6b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .demo-loading-text {
+            font-size: 1rem;
+            margin: 15px 0;
+            opacity: 0.9;
+        }
+        
+        .demo-progress-container {
             width: 300px;
-            height: 4px;
+            height: 6px;
             background: rgba(255,255,255,0.2);
-            border-radius: 2px;
+            border-radius: 3px;
             overflow: hidden;
-            margin-bottom: 15px;
+            margin: 20px auto;
         }
         
         .demo-progress-bar {
             height: 100%;
-            background: #ff6b6b;
+            background: linear-gradient(90deg, #ff6b6b, #ffa500);
             width: 0%;
-            border-radius: 2px;
+            border-radius: 3px;
             transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(255,107,107,0.6);
         }
         
-        .demo-status {
-            font-size: 0.9rem;
-            opacity: 0.9;
+        .demo-music-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
         }
         
         @keyframes pulse {
@@ -273,13 +386,59 @@
         
         <div class="preview-frame">
             <div class="loading-demo" id="loading-demo">
-                <div class="demo-logo">🎮</div>
-                <div class="demo-title">Your FiveM Server</div>
-                <div class="demo-subtitle">Welcome to the experience!</div>
-                <div class="demo-progress">
-                    <div class="demo-progress-bar" id="progress-bar"></div>
+                <!-- Sunucu Bilgi Paneli -->
+                <div class="demo-server-panel">
+                    <div class="demo-server-ip">
+                        <i>🖥️</i>
+                        <span>connect yourserver.com</span>
+                    </div>
+                    <div class="demo-player-count">
+                        <i>👥</i>
+                        <span id="demo-player-count">45/128</span>
+                    </div>
                 </div>
-                <div class="demo-status" id="demo-status">Connecting to server...</div>
+                
+                <!-- Sol Sidebar - Kurallar -->
+                <div class="demo-sidebar-left">
+                    <div class="demo-rules">
+                        <h3>📋 Rules</h3>
+                        <ul>
+                            <li>• No harassment in server</li>
+                            <li>• Cheating is forbidden</li>
+                            <li>• Respect the staff</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Sağ Sidebar - Yetkili Kadro -->
+                <div class="demo-sidebar-right">
+                    <div class="demo-team">
+                        <h3>👑 Staff Team</h3>
+                        <div class="demo-staff">
+                            <span class="demo-owner">🔴 AdminName</span>
+                            <span class="demo-mod">🔵 ModeratorName</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ana Loading Alanı -->
+                <div class="demo-main">
+                    <div class="demo-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iIzRmYzNmNyIvPgogIDx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TVM8L3RleHQ+Cjwvc3ZnPg==" alt="Logo" />
+                    </div>
+                    <h1 class="demo-server-name">Meta Scripts</h1>
+                    <div class="demo-slogan">The best Loading Screen...</div>
+                    
+                    <div class="demo-spinner"></div>
+                    
+                    <div class="demo-loading-text" id="demo-loading-text">Loading...</div>
+                    
+                    <div class="demo-progress-container">
+                        <div class="demo-progress-bar" id="progress-bar"></div>
+                    </div>
+                    
+                    <div class="demo-music-btn">🔊</div>
+                </div>
             </div>
         </div>
         
@@ -323,7 +482,7 @@
         
         <div class="cta-section">
             <h2>Ready to Transform Your Server?</h2>
-            <p>Join hundreds of satisfied server owners who've upgraded their loading experience!</p>
+            <p>Get the exact loading screen design shown in the demo above!</p>
             
             <a href="#" class="cta-button">💰 Standard Edition - $24.99</a>
             <a href="#" class="cta-button">🚀 Professional Edition - $34.99</a>
@@ -334,9 +493,9 @@
         </div>
         
         <div style="margin: 40px 0; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 15px;">
-            <h3>🎬 See It In Action</h3>
-            <p>This is a live, interactive demo of the actual loading screen. Try different themes above!</p>
-            <p><strong>Note:</strong> In your FiveM server, this will appear during player connection.</p>
+            <h3>🎬 Authentic Loading Screen Demo</h3>
+            <p>This demo replicates your actual FiveM loading screen layout and features. What you see is what you get!</p>
+            <p><strong>Included:</strong> Server info panel, rules sidebar, staff team display, progress animation, and 4 premium themes.</p>
         </div>
     </div>
     
@@ -347,10 +506,17 @@
         const messages = [
             "Connecting to server...",
             "Loading game files...",
-            "Preparing experience...",
-            "Almost ready...",
-            "Welcome!"
+            "Preparing character data...",
+            "Loading world map...",
+            "Final adjustments...",
+            "Welcome to Meta Scripts!"
         ];
+        
+        function updatePlayerCount() {
+            const playerCountElement = document.getElementById('demo-player-count');
+            const randomCount = Math.floor(Math.random() * 50) + 30; // 30-80 arası
+            playerCountElement.textContent = `${randomCount}/128`;
+        }
         
         function changeTheme(themeName) {
             currentTheme = themeName;
@@ -374,7 +540,7 @@
         
         function startProgress() {
             const progressBar = document.getElementById('progress-bar');
-            const statusElement = document.getElementById('demo-status');
+            const loadingTextElement = document.getElementById('demo-loading-text');
             let progress = 0;
             let messageIndex = 0;
             
@@ -384,32 +550,35 @@
             }
             
             progressBar.style.width = '0%';
-            statusElement.textContent = messages[0];
+            loadingTextElement.textContent = messages[0];
             
             progressInterval = setInterval(() => {
-                progress += Math.random() * 15 + 5;
+                progress += Math.random() * 12 + 3; // Daha yavaş progress
                 
                 if (progress >= 100) {
                     progress = 100;
-                    statusElement.textContent = messages[4];
+                    loadingTextElement.textContent = messages[messages.length - 1];
                     clearInterval(progressInterval);
                     
-                    // Restart after 2 seconds
+                    // Update player count
+                    updatePlayerCount();
+                    
+                    // Restart after 3 seconds
                     setTimeout(() => {
                         if (document.getElementById('loading-demo')) {
                             startProgress();
                         }
-                    }, 2000);
+                    }, 3000);
                 } else {
                     const newMessageIndex = Math.floor((progress / 100) * (messages.length - 1));
                     if (newMessageIndex !== messageIndex && newMessageIndex < messages.length - 1) {
                         messageIndex = newMessageIndex;
-                        statusElement.textContent = messages[messageIndex];
+                        loadingTextElement.textContent = messages[messageIndex];
                     }
                 }
                 
                 progressBar.style.width = progress + '%';
-            }, 500);
+            }, 600); // Daha yavaş güncelleme
         }
         
         function showNotification(message) {
