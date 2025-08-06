@@ -221,6 +221,16 @@
             to { transform: translateX(0); opacity: 1; }
         }
         
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
         @media (max-width: 768px) {
             .demo-header h1 {
                 font-size: 2rem;
@@ -263,7 +273,40 @@
             <div class="screenshot-demo">
                 <img id="demo-screenshot" 
                      src="https://raw.githubusercontent.com/JarvisX1/MS-Loading/main/images/default-theme.png" 
-                     alt="MS Loading Screen Demo" />
+                     alt="MS Loading Screen Demo"
+                     onerror="this.style.display='none'; document.getElementById('fallback-demo').style.display='block';" />
+                
+                <!-- Fallback demo eğer resimler yüklenemezse -->
+                <div id="fallback-demo" style="display:none; width:100%; height:100%; background: linear-gradient(135deg, #4fc3f7 0%, #3498db 100%); display:flex; align-items:center; justify-content:center; flex-direction:column; color:white;">
+                    <div style="text-align:center;">
+                        <!-- Meta Scripts Logo SVG -->
+                        <div style="margin-bottom: 20px;">
+                            <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="45" fill="rgba(255,255,255,0.1)" stroke="url(#logoGradient)" stroke-width="3"/>
+                                <text x="50" y="40" font-family="Arial Black" font-size="24" fill="url(#logoGradient)" text-anchor="middle" font-weight="bold">MS</text>
+                                <text x="50" y="65" font-family="Arial" font-size="8" fill="rgba(255,255,255,0.8)" text-anchor="middle">SCRIPTS</text>
+                            </svg>
+                        </div>
+                        <h2 style="margin: 15px 0 8px 0; font-size: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Meta Scripts RP</h2>
+                        <p style="margin: 8px 0 25px 0; opacity: 0.8; font-style: italic;">The best Loading Screen...</p>
+                        
+                        <!-- Loading Animation -->
+                        <div style="width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid #ffffff; border-radius: 50%; animation: spin 1s linear infinite; margin: 20px auto;"></div>
+                        
+                        <p style="margin: 15px 0; opacity: 0.9;">Loading game files... 75%</p>
+                        
+                        <!-- Progress Bar -->
+                        <div style="width: 300px; height: 6px; background: rgba(255,255,255,0.3); border-radius: 3px; margin: 20px auto; overflow: hidden;">
+                            <div style="width: 75%; height: 100%; background: linear-gradient(90deg, #ff6b6b, #ffa500); border-radius: 3px; animation: pulse 2s infinite;"></div>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="demo-overlay">
                     <div class="demo-badge">
@@ -293,6 +336,12 @@
             </div>
             
             <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile Responsive</h3>
+                <p>Perfect display on desktop, tablet, and mobile devices</p>
+            </div>
+            
+            <div class="feature-card">
                 <div class="feature-icon">🌍</div>
                 <h3>Multi-Language Support</h3>
                 <p>5 languages included: English, Turkish, German, French, Spanish</p>
@@ -314,6 +363,9 @@
         <div class="cta-section">
             <h2>Ready to Transform Your Server?</h2>
             <p>Get the exact loading screen design shown in the demo above!</p>
+            
+            <a href="#" class="cta-button">💰 Standard Edition - $24.99</a>
+            <a href="#" class="cta-button">🚀 Professional Edition - $34.99</a>
             
             <p style="margin-top: 20px; opacity: 0.9;">
                 ✅ Instant Download &nbsp;•&nbsp; ✅ Discord Support &nbsp;•&nbsp; ✅ 1-Year Updates
@@ -410,4 +462,3 @@
     </script>
 </body>
 </html>
-
