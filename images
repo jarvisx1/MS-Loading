@@ -1,0 +1,21 @@
+# Loading Screen Images
+
+Bu klasörde loading screen için kullanılan resimler bulunur.
+
+## Mevcut Dosyalar:
+- `neon-blue-theme.png` - Neon Blue tema screenshot'ı
+- `neon-theme.png` - Neon tema screenshot'ı
+- `minimal.png` - Minimal tema dosyası
+- `neon.png` - Neon tema dosyası
+
+## Demo'da Kullanılan Resimler:
+Demo sayfasında (jarvisx1.github.io/MS-Loading/demo.html) aşağıdaki resimler kullanılır:
+- Default Blue Theme
+- Minimal Gray Theme
+- Neon Green Theme  
+- Neon Blue Theme
+
+## Yeni Resim Ekleme:
+1. Bu klasöre yeni resim yükleyin
+2. Config.js dosyasında images array'ine ekleyin
+3. Demo sayfasında görünecektir
